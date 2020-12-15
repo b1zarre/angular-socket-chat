@@ -1,0 +1,10 @@
+{
+"scripts": {
+    "start": "node ./server/dist/index.js",
+    "postinstall": "cd server && npm install && cd ../client && npm install"
+  },
+  "engines": {
+    "node": "10.13.0",
+    "npm": "6.4.1"
+  }
+}

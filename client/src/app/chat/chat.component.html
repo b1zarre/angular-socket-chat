@@ -1,0 +1,70 @@
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav>
+    <mat-nav-list>
+      <h2 mat-list-item>Список участников</h2>
+      <div *ngFor="let user of users">
+        <mat-icon mat-list-icon>person</mat-icon>
+        <span mat-line>{{ user.name }}</span>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-toolbar color="primary">
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    <p>Ваше имя:</p>
+    <span *ngFor="let user of users">
+      <p>{{ user.name }}</p>
+    </span>
+    <img
+      [src]="user.avatar"
+      alt=""
+      height="48px"
+      width="48px"
+      style="border-radius: 100%"
+    />
+  </mat-toolbar>
+  <div class="chat-container">
+    <mat-card class="main-card">
+      <mat-list class="chat-list">
+        <mat-list-item *ngFor="let message of messages" class="chat-list-item">
+          <img mat-list-avatar [src]="message.from.avatar" />
+          <h4 mat-line>
+            <b>{{ message.from.name }}</b>
+          </h4>
+          <p mat-line>
+            <span *ngIf="message.content.length <= 140">
+              {{ message.content }}
+            </span>
+            <img
+              *ngIf="message.content.length >= 140"
+              [src]="message.content"
+              class="chat-img"
+              lightbox
+            />
+          </p>
+        </mat-list-item>
+      </mat-list>
+      <div class="chat-footer-container">
+        <mat-icon>message</mat-icon>
+        <mat-form-field class="chat-input">
+          <input
+            matInput
+            #inputMessage
+            maxlength="140"
+            placeholder="{{ 'Type your message' }}"
+            [(ngModel)]="messageContent"
+            (keyup.enter)="sendMessage(messageContent)"
+          />
+          <mat-hint align="end">{{ inputMessage.value.length }}/140</mat-hint>
+        </mat-form-field>
+        <input
+          type="file"
+          alife-file-to-base64
+          (onFileChanged)="onFileChanges($event)"
+          [(fileModel)]="files"
+        />
+      </div>
+    </mat-card>
+  </div>
+</mat-sidenav-container>
